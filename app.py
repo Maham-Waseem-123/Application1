@@ -1,5 +1,5 @@
 # ------------------------------------------------------------
-# 💜 Background Remover Web App - Deep Purple Theme (No Pink)
+# 💖 Background Remover Web App - Pink Background with Purple Theme
 # ------------------------------------------------------------
 # Install (in case not done):
 # pip install streamlit rembg pillow onnxruntime
@@ -20,37 +20,37 @@ st.set_page_config(
 )
 
 # ------------------------------------------------------------
-# PURE PURPLE THEME CSS (No pink gradient)
+# CUSTOM STYLE (Pink Background + Purple Writeup)
 # ------------------------------------------------------------
 st.markdown("""
     <style>
-        /* Deep purple background */
+        /* Soft pink background */
         [data-testid="stAppViewContainer"] {
-            background-color: #2e0854;
-            color: #ffffff;
+            background-color: #ffe6f2;
+            color: #5a00b0;
         }
 
-        /* Sidebar */
+        /* Sidebar styling */
         [data-testid="stSidebar"] {
-            background: rgba(50, 0, 100, 0.9);
+            background: rgba(255, 240, 250, 0.9);
             backdrop-filter: blur(10px);
-            color: white;
+            color: #5a00b0;
         }
 
-        /* Title styling */
+        /* Main title */
         .main-title {
             text-align: center;
             font-size: 3em;
             font-weight: 800;
-            color: #c3a1ff;
+            color: #7b2cbf;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         /* Subtitle */
         .sub-title {
             text-align: center;
-            color: #ddd0ff;
+            color: #9d4edd;
             font-size: 1.2em;
             margin-bottom: 40px;
             font-weight: 400;
@@ -59,15 +59,15 @@ st.markdown("""
         /* File uploader */
         .uploadedFile {
             border-radius: 10px !important;
-            border: 2px dashed #a780ff !important;
-            background-color: rgba(255,255,255,0.08);
+            border: 2px dashed #c77dff !important;
+            background-color: rgba(255, 255, 255, 0.4);
             padding: 15px;
         }
 
-        /* Image display cards */
+        /* Image cards */
         .stImage {
             border-radius: 20px !important;
-            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 8px 25px rgba(123, 44, 191, 0.3);
             transition: transform 0.3s ease-in-out;
         }
         .stImage:hover {
@@ -76,28 +76,28 @@ st.markdown("""
 
         /* Download button */
         div.stDownloadButton > button {
-            background: #5a00b0;
+            background: linear-gradient(90deg, #9d4edd, #7b2cbf);
             color: white;
             border: none;
             padding: 0.8em 2em;
             font-size: 1.1em;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
             transition: all 0.3s ease-in-out;
         }
 
         div.stDownloadButton > button:hover {
             transform: scale(1.05);
-            background: #7f00ff;
-            box-shadow: 0px 4px 25px rgba(200, 150, 255, 0.5);
+            background: linear-gradient(90deg, #7b2cbf, #5a00b0);
+            box-shadow: 0px 4px 25px rgba(155, 0, 255, 0.4);
         }
 
         /* Footer */
         .footer {
             text-align: center;
             font-size: 0.95em;
-            color: #c9b8ff;
+            color: #7b2cbf;
             margin-top: 40px;
         }
     </style>
@@ -107,7 +107,7 @@ st.markdown("""
 # PAGE TITLE
 # ------------------------------------------------------------
 st.markdown("<h1 class='main-title'>🖼️ AI Background Remover</h1>", unsafe_allow_html=True)
-st.markdown("<p class='sub-title'>Remove image backgrounds effortlessly using powerful AI — clean, fast, and beautiful.</p>", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>Remove image backgrounds effortlessly using powerful AI — soft pink & purple style 💜</p>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------
 # FILE UPLOAD SECTION
@@ -151,4 +151,4 @@ if uploaded_file:
 # ------------------------------------------------------------
 # FOOTER
 # ------------------------------------------------------------
-st.markdown("<p class='footer'>Made with 💜 using Streamlit & Rembg | © 2025 Maham Waseem</p>", unsafe_allow_html=True)
+st.markdown("<p class='footer'>Made with 💜 by Maham Waseem | Powered by Streamlit & Rembg</p>", unsafe_allow_html=True)
