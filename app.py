@@ -91,4 +91,65 @@ st.markdown("""
         div.stDownloadButton > button:hover {
             transform: scale(1.05);
             background: linear-gradient(90deg, #8e2de2, #4a00e0);
-            b
+            box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 0.95em;
+            color: #e0e0ff;
+            margin-top: 40px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------------------
+# PAGE TITLE
+# ------------------------------------------------------------
+st.markdown("<h1 class='main-title'>🖼️ AI Background Remover</h1>", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>Remove image backgrounds effortlessly using powerful AI — clean, fast, and beautiful.</p>", unsafe_allow_html=True)
+
+# ------------------------------------------------------------
+# FILE UPLOAD SECTION
+# ------------------------------------------------------------
+uploaded_file = st.file_uploader("📤 Upload an image file", type=["jpg", "jpeg", "png"])
+
+# ------------------------------------------------------------
+# IMAGE PROCESSING
+# ------------------------------------------------------------
+if uploaded_file:
+    input_image = Image.open(uploaded_file)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("🎨 Original Image")
+        st.image(input_image, use_column_width=True)
+
+    with st.spinner("✨ Magic in progress... Removing background..."):
+        output_image = remove(input_image)
+
+    with col2:
+        st.subheader("🌟 Background Removed")
+        st.image(output_image, use_column_width=True)
+
+    # ------------------------------------------------------------
+    # DOWNLOAD SECTION
+    # ------------------------------------------------------------
+    buf = io.BytesIO()
+    output_image.save(buf, format="PNG")
+    byte_im = buf.getvalue()
+
+    st.download_button(
+        label="📥 Download Image (PNG)",
+        data=byte_im,
+        file_name="output_image.png",
+        mime="image/png",
+        use_container_width=True
+    )
+
+# ------------------------------------------------------------
+# FOOTER
+# ------------------------------------------------------------
+st.markdown("<p class='footer'>Made with 💜 using Streamlit & Rembg | © 2025 Maham Waseem</p>", unsafe_allow_html=True)
