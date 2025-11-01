@@ -98,7 +98,7 @@ st.markdown("""
 # ------------------------------------------------------------
 # PAGE HEADER
 # ------------------------------------------------------------
-st.markdown("<h1 class='main-title'>🖼️ AI Background Remover</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>🖼️ Image Background Changer</h1>", unsafe_allow_html=True)
 st.markdown("<p class='sub-title'>Remove image backgrounds effortlessly using AI — pink & purple aesthetic 💜</p>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------
@@ -178,3 +178,4 @@ if uploaded_file:
 # FOOTER
 # ------------------------------------------------------------
 st.markdown("<p class='footer'>Made with 💜 by Maham Waseem | Powered by Streamlit & Rembg</p>", unsafe_allow_html=True)
+
