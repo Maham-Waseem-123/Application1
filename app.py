@@ -1,12 +1,12 @@
 # ------------------------------------------------------------
-# 💖 Background Remover Web App - Pink Background with Purple Theme + Resize Feature
+# 💖 AI Background Remover - Pink & Purple Edition (Enhanced)
 # ------------------------------------------------------------
-# Install (in case not done):
+# Install first (if not done):
 # pip install streamlit rembg pillow onnxruntime
 
 import streamlit as st
 from rembg import remove
-from PIL import Image
+from PIL import Image, ImageOps
 import io
 
 # ------------------------------------------------------------
@@ -28,11 +28,12 @@ st.markdown("""
             background-color: #ffe6f2;
             color: #5a00b0;
         }
+
         [data-testid="stSidebar"] {
             background: rgba(255, 240, 250, 0.9);
-            backdrop-filter: blur(10px);
             color: #5a00b0;
         }
+
         .main-title {
             text-align: center;
             font-size: 3em;
@@ -41,6 +42,7 @@ st.markdown("""
             margin-bottom: 5px;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
+
         .sub-title {
             text-align: center;
             color: #9d4edd;
@@ -48,12 +50,17 @@ st.markdown("""
             margin-bottom: 40px;
             font-weight: 400;
         }
+
         .stImage {
             border-radius: 20px !important;
             box-shadow: 0px 8px 25px rgba(123, 44, 191, 0.3);
             transition: transform 0.3s ease-in-out;
         }
-        .stImage:hover { transform: scale(1.02); }
+
+        .stImage:hover {
+            transform: scale(1.02);
+        }
+
         div.stDownloadButton > button {
             background: linear-gradient(90deg, #9d4edd, #7b2cbf);
             color: white;
@@ -65,25 +72,34 @@ st.markdown("""
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
             transition: all 0.3s ease-in-out;
         }
+
         div.stDownloadButton > button:hover {
             transform: scale(1.05);
             background: linear-gradient(90deg, #7b2cbf, #5a00b0);
             box-shadow: 0px 4px 25px rgba(155, 0, 255, 0.4);
         }
+
         .footer {
             text-align: center;
             font-size: 0.95em;
             color: #7b2cbf;
             margin-top: 40px;
         }
+
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #ffb3e6, #c77dff);
+            margin: 25px 0;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------
-# PAGE TITLE
+# PAGE HEADER
 # ------------------------------------------------------------
 st.markdown("<h1 class='main-title'>🖼️ AI Background Remover</h1>", unsafe_allow_html=True)
-st.markdown("<p class='sub-title'>Remove image backgrounds effortlessly and resize for social media 💜</p>", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>Remove image backgrounds effortlessly using AI — pink & purple aesthetic 💜</p>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------
 # FILE UPLOAD SECTION
@@ -94,56 +110,67 @@ uploaded_file = st.file_uploader("📤 Upload an image file", type=["jpg", "jpeg
 # IMAGE PROCESSING
 # ------------------------------------------------------------
 if uploaded_file:
-    input_image = Image.open(uploaded_file)
+    input_image = Image.open(uploaded_file).convert("RGBA")
 
     col1, col2 = st.columns(2)
-
     with col1:
         st.subheader("🎨 Original Image")
         st.image(input_image, use_column_width=True)
 
-    with st.spinner("✨ Magic in progress... Removing background..."):
+    with st.spinner("✨ Removing background..."):
         output_image = remove(input_image)
+
+    # ------------------------------------------------------------
+    # BACKGROUND PREVIEW OPTIONS
+    # ------------------------------------------------------------
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.subheader("🌈 Preview Background Options")
+
+    bg_option = st.radio("Choose a background:", ["Transparent", "White", "Black", "Custom Color"])
+
+    if bg_option == "White":
+        bg_color = (255, 255, 255, 255)
+    elif bg_option == "Black":
+        bg_color = (0, 0, 0, 255)
+    elif bg_option == "Custom Color":
+        hex_color = st.color_picker("🎨 Pick a background color", "#FFC0CB")
+        bg_color = tuple(int(hex_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4)) + (255,)
+    else:
+        bg_color = None
+
+    # Apply background color if selected
+    if bg_color:
+        bg_layer = Image.new("RGBA", output_image.size, bg_color)
+        output_image = Image.alpha_composite(bg_layer, output_image)
 
     with col2:
         st.subheader("🌟 Background Removed")
         st.image(output_image, use_column_width=True)
 
     # ------------------------------------------------------------
-    # RESIZE FEATURE
-    # ------------------------------------------------------------
-    st.markdown("### ✨ Resize for Social Media")
-    platform = st.selectbox(
-        "Choose a platform to resize your image for:",
-        ["None", "Instagram", "Facebook", "WhatsApp"]
-    )
-
-    sizes = {
-        "Instagram": (1080, 1080),
-        "Facebook": (1200, 630),
-        "WhatsApp": (640, 640)
-    }
-
-    resized_image = output_image
-
-    if platform != "None":
-        target_size = sizes[platform]
-        resized_image = output_image.resize(target_size, Image.Resampling.LANCZOS)
-        st.success(f"✅ Resized for {platform} ({target_size[0]}x{target_size[1]} px)")
-        st.image(resized_image, caption=f"Resized for {platform}", use_column_width=True)
-
-    # ------------------------------------------------------------
     # DOWNLOAD SECTION
     # ------------------------------------------------------------
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.subheader("📥 Download Options")
+
+    file_format = st.radio("Choose download format:", ["PNG", "JPG"])
     buf = io.BytesIO()
-    resized_image.save(buf, format="PNG")
-    byte_im = buf.getvalue()
+
+    if file_format == "PNG":
+        output_image.save(buf, format="PNG")
+        file_name = "background_removed.png"
+        mime_type = "image/png"
+    else:
+        output_image = output_image.convert("RGB")
+        output_image.save(buf, format="JPEG")
+        file_name = "background_removed.jpg"
+        mime_type = "image/jpeg"
 
     st.download_button(
-        label=f"📥 Download ({platform if platform != 'None' else 'Original Size'})",
-        data=byte_im,
-        file_name=f"output_{platform.lower() if platform!='None' else 'original'}.png",
-        mime="image/png",
+        label=f"📥 Download {file_format} Image",
+        data=buf.getvalue(),
+        file_name=file_name,
+        mime=mime_type,
         use_container_width=True
     )
 
