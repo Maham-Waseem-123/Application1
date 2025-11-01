@@ -1,5 +1,5 @@
 # ------------------------------------------------------------
-# 💜 Background Remover Web App - Purple Gradient Theme
+# 💜 Background Remover Web App - Deep Purple Theme (No Pink)
 # ------------------------------------------------------------
 # Install (in case not done):
 # pip install streamlit rembg pillow onnxruntime
@@ -20,20 +20,21 @@ st.set_page_config(
 )
 
 # ------------------------------------------------------------
-# CUSTOM PURPLE THEME CSS STYLE
+# PURE PURPLE THEME CSS (No pink gradient)
 # ------------------------------------------------------------
 st.markdown("""
     <style>
-        /* Gradient background - Purple aesthetic */
+        /* Deep purple background */
         [data-testid="stAppViewContainer"] {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background-color: #2e0854;
             color: #ffffff;
         }
 
         /* Sidebar */
         [data-testid="stSidebar"] {
-            background: #ffffffcc;
+            background: rgba(50, 0, 100, 0.9);
             backdrop-filter: blur(10px);
+            color: white;
         }
 
         /* Title styling */
@@ -41,17 +42,15 @@ st.markdown("""
             text-align: center;
             font-size: 3em;
             font-weight: 800;
-            background: linear-gradient(90deg, #b993d6, #8ca6db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #c3a1ff;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
         }
 
         /* Subtitle */
         .sub-title {
             text-align: center;
-            color: #e5e5f7;
+            color: #ddd0ff;
             font-size: 1.2em;
             margin-bottom: 40px;
             font-weight: 400;
@@ -60,15 +59,15 @@ st.markdown("""
         /* File uploader */
         .uploadedFile {
             border-radius: 10px !important;
-            border: 2px dashed #d1c4e9 !important;
-            background-color: rgba(255,255,255,0.15);
+            border: 2px dashed #a780ff !important;
+            background-color: rgba(255,255,255,0.08);
             padding: 15px;
         }
 
         /* Image display cards */
         .stImage {
             border-radius: 20px !important;
-            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s ease-in-out;
         }
         .stImage:hover {
@@ -77,28 +76,28 @@ st.markdown("""
 
         /* Download button */
         div.stDownloadButton > button {
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            background: #5a00b0;
             color: white;
             border: none;
             padding: 0.8em 2em;
             font-size: 1.1em;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease-in-out;
         }
 
         div.stDownloadButton > button:hover {
             transform: scale(1.05);
-            background: linear-gradient(90deg, #8e2de2, #4a00e0);
-            box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.4);
+            background: #7f00ff;
+            box-shadow: 0px 4px 25px rgba(200, 150, 255, 0.5);
         }
 
         /* Footer */
         .footer {
             text-align: center;
             font-size: 0.95em;
-            color: #e0e0ff;
+            color: #c9b8ff;
             margin-top: 40px;
         }
     </style>
